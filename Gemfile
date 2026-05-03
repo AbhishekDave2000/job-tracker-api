@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Gemfile
-gem "dotenv-rails", groups: [:development, :test]  # ← must be BEFORE other gems
+gem "dotenv-rails", groups: [ :development, :test ]  # ← must be BEFORE other gems
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 ruby "3.3.4"
