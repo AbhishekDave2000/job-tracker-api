@@ -4,7 +4,7 @@ class FollowUp < ApplicationRecord
   # Validations
   validates :remind_at, presence: true
   validates :message, presence: true
-  validates :completed, inclusion: { in: [true, false] }
+  validates :completed, inclusion: { in: [ true, false ] }
   validate :remind_at_can_not_be_in_past, on: :create
 
   # Scopes

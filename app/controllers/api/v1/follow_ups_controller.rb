@@ -1,9 +1,9 @@
 class Api::V1::FollowUpsController < ApplicationController
-  before_action :set_job_application, only: [:index, :create]
-  before_action :set_follow_up, only: [:show, :update, :destroy, :complete_follow_up]
+  before_action :set_job_application, only: [ :index, :create ]
+  before_action :set_follow_up, only: [ :show, :update, :destroy, :complete_follow_up ]
 
   def index
-    follow_ups = filter_follow_ups( @job_application.follow_ups )
+    follow_ups = filter_follow_ups(@job_application.follow_ups)
 
     render json: {
       status: "success",
@@ -37,7 +37,7 @@ class Api::V1::FollowUpsController < ApplicationController
     }, status: :ok
   end
 
-  def update 
+  def update
     if @follow_up.update(follow_up_params)
       render json: {
         status: "success",
@@ -47,7 +47,7 @@ class Api::V1::FollowUpsController < ApplicationController
     else
       render json: {
         status: "error",
-        message: "Can not update the follow up",
+        message: "Can not update the follow up"
       }, status: :unprocessable_entity
     end
   end
@@ -56,7 +56,7 @@ class Api::V1::FollowUpsController < ApplicationController
     @follow_up.destroy
     render json: {
       status: "success",
-      message: "Followup deleted successfully",
+      message: "Followup deleted successfully"
     }, status: :ok
   end
 
@@ -64,7 +64,7 @@ class Api::V1::FollowUpsController < ApplicationController
     if @follow_up.completed?
       render json: {
         status: "error",
-        message: "Follow up is already completed",
+        message: "Follow up is already completed"
       }, status: :unprocessable_entity
     else
       @follow_up.update(completed: true, completed_at: Time.current)
@@ -86,7 +86,7 @@ class Api::V1::FollowUpsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render json: {
       status: "error",
-      message: "Job Application not found.",
+      message: "Job Application not found."
     }, status: :not_found
   end
 
@@ -97,7 +97,7 @@ class Api::V1::FollowUpsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render json: {
       status: "error",
-      message: "Follow Ups not found.",
+      message: "Follow Ups not found."
     }, status: :not_found
   end
 

@@ -28,6 +28,4 @@ class JobApplication < ApplicationRecord
       changed_at: Time.current
     )
   end
-
 end
-

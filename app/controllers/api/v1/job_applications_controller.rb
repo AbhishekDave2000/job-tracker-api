@@ -1,5 +1,5 @@
 class Api::V1::JobApplicationsController < ApplicationController
-    before_action :set_job_application, only: [:show, :update, :destroy]
+    before_action :set_job_application, only: [ :show, :update, :destroy ]
 
     # GET /api/v1/job_applications
     def index
@@ -11,7 +11,7 @@ class Api::V1::JobApplicationsController < ApplicationController
     def show
         render json: { application: @job_application }, status: :ok
     end
-    
+
     # POST /api/v1/job_applications
     def create
         job_application = current_user.job_applications.new(application_params)
@@ -19,10 +19,10 @@ class Api::V1::JobApplicationsController < ApplicationController
         if job_application.save!
             render json: { application: job_application }, status: :created
         else
-            render json: {errors: job_application.errors.full_messages}, status: :unprocessable_entity
+            render json: { errors: job_application.errors.full_messages }, status: :unprocessable_entity
         end
     end
-    
+
     # PUT /api/v1/job_applications/:id
     def update
         puts(application_params)

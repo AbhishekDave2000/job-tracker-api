@@ -1,6 +1,6 @@
 class Api::V1::ContactsController < ApplicationController
-    before_action :set_job_application, only: [:index, :create]
-    before_action :set_contact, only: [:show, :update, :destroy]
+    before_action :set_job_application, only: [ :index, :create ]
+    before_action :set_contact, only: [ :show, :update, :destroy ]
 
     # GET /api/v1/contacts_controller
     def index
@@ -35,7 +35,7 @@ class Api::V1::ContactsController < ApplicationController
                 status: "error",
                 message: "Failed to create contact.",
                 errors: format_errors(contact.errors)
-            } 
+            }
         end
     end
 
@@ -60,7 +60,7 @@ class Api::V1::ContactsController < ApplicationController
         @contact.destroy
         render json: {
             status: "success",
-            message: "Contact deleted successfully",
+            message: "Contact deleted successfully"
         }, status: :ok
     end
 
@@ -70,7 +70,7 @@ class Api::V1::ContactsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
         render json: {
             status: "error",
-            message: "Job Application Not Found",
+            message: "Job Application Not Found"
         }, status: :not_found
     end
 

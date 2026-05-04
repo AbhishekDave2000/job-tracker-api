@@ -1,5 +1,5 @@
-class Api::V1::AuthenticationController < ApplicationController 
-    skip_before_action :authenticate_request, only: [:login, :register]
+class Api::V1::AuthenticationController < ApplicationController
+    skip_before_action :authenticate_request, only: [ :login, :register ]
 
     def register
         user = User.create!(user_params)
@@ -7,7 +7,7 @@ class Api::V1::AuthenticationController < ApplicationController
         render json: { token: token, user: user }, status: :created
     end
 
-    def login 
+    def login
         user = User.find_by!(email: params[:email].downcase)
 
         if user.authenticate(params[:password])
