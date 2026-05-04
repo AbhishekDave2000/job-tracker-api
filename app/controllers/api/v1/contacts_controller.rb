@@ -1,5 +1,5 @@
 class Api::V1::ContactsController < ApplicationController
-    before_action :set_job_application, only: [:index]
+    before_action :set_job_application, only: [:index, :create]
     before_action :set_contact, only: [:show, :update, :destroy]
 
     # GET /api/v1/contacts_controller
@@ -17,7 +17,50 @@ class Api::V1::ContactsController < ApplicationController
         render json: {
             status: "success",
             message: "Contact retrieved successfully",
-            data: ContactSerializer.new(contact).serializable_hash
+            data: ContactSerializer.new(@contact).serializable_hash
+        }, status: :ok
+    end
+
+    def create
+        contact = @job_application.contacts.new(contact_params)
+
+        if contact.save
+            render json: {
+                status: "success",
+                message: "Contact added successfully.",
+                data: ContactSerializer.new(contact).serializable_hash
+            }, status: :created
+        else
+            render json: {
+                status: "error",
+                message: "Failed to create contact.",
+                errors: format_errors(contact.errors)
+            } 
+        end
+    end
+
+    def update
+        if @contact.update(contact_params)
+            render json: {
+                status: "success",
+                message: "Contact updated successfully",
+                data: ContactSerializer.new(@contact).serializable_hash
+            }, status: :ok
+        else
+            render json: {
+                status: "error",
+                message: "Failed to update the contact of the person",
+                errors: format_errors(@contact.errors)
+            }, status: :unprocessable_entity
+        end
+    end
+
+
+    def destroy
+        @contact.destroy
+        render json: {
+            status: "success",
+            message: "Contact deleted successfully",
         }, status: :ok
     end
 

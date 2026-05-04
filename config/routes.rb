@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
       # Contacts of particular Application
       resources :contacts
+
+      # Follow Up routes
+      resources :follow_ups
+      post "complete_follow_up/:id", to: "follow_ups#complete_follow_up"
     end
   end
   # Defines the root path route ("/")
