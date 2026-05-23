@@ -4,7 +4,7 @@ class Api::V1::AuthenticationController < ApplicationController
     def register
         user = User.create!(user_params)
         token = JsonWebToken.encode(user_id: user.id)
-        render json: { token: token, user: user }, status: :created
+        render json: { token: token, user: UserSerializer.new(user).serializable_hash }, status: :created
     end
 
     def login
@@ -12,7 +12,7 @@ class Api::V1::AuthenticationController < ApplicationController
 
         if user.authenticate(params[:password])
             token = JsonWebToken.encode(user_id: user.id)
-            render json: { token: token, user: user }, status: :ok
+            render json: { token: token, user: UserSerializer.new(user).serializable_hash }, status: :ok
         else
             render json: { error: "Invalid Password" }, status: :unauthorized
         end
