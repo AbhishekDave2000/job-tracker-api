@@ -68,7 +68,7 @@ class Api::V1::FollowUpsController < ApplicationController
         message: "Follow up is already completed"
       }, status: :unprocessable_entity
     else
-      @follow_up.update(completed: true, completed_at: Time.current)
+      @follow_up.update!(completed: true, completed_at: Time.current)
       render json: {
         status: "success",
         message: "Successfully completed follow up",

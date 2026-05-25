@@ -9,7 +9,7 @@ class FollowUp < ApplicationRecord
 
   # Scopes
   scope :pending,   -> { where(completed: false).where("remind_at >= ?", Time.current) }
-  scope :overdue,   -> { where(completed: false).where("remind_at >= ?", Time.current) }
+  scope :overdue,   -> { where(completed: false).where("remind_at < ?", Time.current) }
   scope :completed, -> { where(completed: true) }
   scope :today,     -> { where(remind_at: Time.current.beginning_of_day..Time.current.end_of_day) }
   scope :upcoming,  -> { where(completed: false).where("remind_at > ?", Time.current).order(:remind_at) }
@@ -28,7 +28,7 @@ class FollowUp < ApplicationRecord
   def set_completed_at
     if completed? && completed_at.blank?
       self.completed_at = Time.current
-    else
+    elsif !completed?
       self.completed_at = nil
     end
   end
