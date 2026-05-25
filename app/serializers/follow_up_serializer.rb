@@ -1,6 +1,4 @@
-class FollowUpSerializer
-    include JSONAPI::Serializer
-
+class FollowUpSerializer < ActiveModel::Serializer
     attributes  :id,
                 :message,
                 :remind_at,
@@ -8,9 +6,10 @@ class FollowUpSerializer
                 :completed_at,
                 :job_application_id,
                 :created_at,
-                :updated_at
+                :updated_at,
+                :status
 
-  attribute :status do |object|
+  def status
     if object.completed?
       "completed"
     elsif object.remind_at < Time.current

@@ -9,7 +9,8 @@ class Api::V1::ContactsController < ApplicationController
         render json: {
             status: "success",
             message: "Contacts retrieved successfully",
-            data: ContactSerializer.new(contacts).serializable_hash
+            data: contacts.map { |c| ContactSerializer.new(c).as_json },
+            total: contacts.count
         }, status: :ok
     end
 
@@ -17,7 +18,7 @@ class Api::V1::ContactsController < ApplicationController
         render json: {
             status: "success",
             message: "Contact retrieved successfully",
-            data: ContactSerializer.new(@contact).serializable_hash
+            data: ContactSerializer.new(@contact).as_json
         }, status: :ok
     end
 
@@ -28,7 +29,7 @@ class Api::V1::ContactsController < ApplicationController
             render json: {
                 status: "success",
                 message: "Contact added successfully.",
-                data: ContactSerializer.new(contact).serializable_hash
+                data: ContactSerializer.new(contact).as_json
             }, status: :created
         else
             render json: {
@@ -44,7 +45,7 @@ class Api::V1::ContactsController < ApplicationController
             render json: {
                 status: "success",
                 message: "Contact updated successfully",
-                data: ContactSerializer.new(@contact).serializable_hash
+                data: ContactSerializer.new(@contact).as_json
             }, status: :ok
         else
             render json: {

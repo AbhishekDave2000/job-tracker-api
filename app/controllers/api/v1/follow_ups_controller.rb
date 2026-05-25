@@ -8,7 +8,8 @@ class Api::V1::FollowUpsController < ApplicationController
     render json: {
       status: "success",
       message: "Follow ups retrieved successfully",
-      data: FollowUpSerializer.new(follow_ups).serializable_hash
+      data: follow_ups.map { |f| FollowUpSerializer.new(f).as_json },
+      meta: { total: follow_ups.count }
     }, status: :ok
   end
 
@@ -18,7 +19,7 @@ class Api::V1::FollowUpsController < ApplicationController
       render json: {
         status: "success",
         message: "Follow Up created successfully",
-        data: FollowUpSerializer.new(follow_up).serializable_hash
+        data: FollowUpSerializer.new(follow_up).as_json
       }, status: :ok
     else
       render json: {
@@ -33,7 +34,7 @@ class Api::V1::FollowUpsController < ApplicationController
     render json: {
       status: "success",
       message: "Successfully retrieved Follow ups",
-      data: FollowUpSerializer.new(@follow_up).serializable_hash
+      data: FollowUpSerializer.new(@follow_up).as_json
     }, status: :ok
   end
 
@@ -42,7 +43,7 @@ class Api::V1::FollowUpsController < ApplicationController
       render json: {
         status: "success",
         message: "Successfully updated the follow up",
-        data: FollowUpSerializer.new(@follow_up).serializable_hash
+        data: FollowUpSerializer.new(@follow_up).as_json
       }, status: :ok
     else
       render json: {
@@ -71,7 +72,7 @@ class Api::V1::FollowUpsController < ApplicationController
       render json: {
         status: "success",
         message: "Successfully completed follow up",
-        data: FollowUpSerializer.new(@follow_up).serializable_hash
+        data: FollowUpSerializer.new(@follow_up).as_json
       }, status: :ok
     end
   end

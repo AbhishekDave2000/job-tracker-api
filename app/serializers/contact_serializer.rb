@@ -1,6 +1,4 @@
-class ContactSerializer
-    include JSONAPI::Serializer
-
+class ContactSerializer < ActiveModel::Serializer
     attributes  :id,
                 :name,
                 :email,
