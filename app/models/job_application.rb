@@ -22,6 +22,9 @@ class JobApplication < ApplicationRecord
 
   private
   def track_status_change
+    if self.status === "applied"
+      self.applied_date = Time.current
+    end
     status_histories.build(
       previous_status: status_change.first,
       new_status: status_change.second,

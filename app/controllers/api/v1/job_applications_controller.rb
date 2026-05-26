@@ -25,7 +25,6 @@ class Api::V1::JobApplicationsController < ApplicationController
 
     # PUT /api/v1/job_applications/:id
     def update
-        puts(application_params)
         if @job_application.update(application_params)
             render json: { application: @job_application }, status: :ok
         else
