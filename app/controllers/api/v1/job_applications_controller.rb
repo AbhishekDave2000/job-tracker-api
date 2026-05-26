@@ -3,8 +3,14 @@ class Api::V1::JobApplicationsController < ApplicationController
 
     # GET /api/v1/job_applications
     def index
-        applications = current_user.job_applications
-        render json: { applications: applications }, status: :ok
+        allowed_statuses = JobApplication.statuses.keys
+        if filter_params[:status].present? && filter_params[:status].in?(allowed_statuses)
+            applications = current_user.job_applications.where(status: filter_params[:status])
+            render json: { applications: applications }, status: :ok
+        else
+            applications = current_user.job_applications
+            render json: { applications: applications }, status: :ok
+        end
     end
 
     # GET /api/v1/job_applications/:id
@@ -39,6 +45,10 @@ class Api::V1::JobApplicationsController < ApplicationController
     end
 
     private
+    def filter_params
+        params.permit(:status)
+    end
+    
     def set_job_application
         @job_application = current_user.job_applications.find(params[:id])
     rescue
