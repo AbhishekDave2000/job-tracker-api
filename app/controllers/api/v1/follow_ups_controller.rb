@@ -8,8 +8,8 @@ class Api::V1::FollowUpsController < ApplicationController
     render json: {
       status: "success",
       message: "Follow ups retrieved successfully",
-      data: follow_ups.map { |f| FollowUpSerializer.new(f).as_json },
-      meta: { total: follow_ups.count }
+      data: follow_ups.order(remind_at: :asc).map { |f| FollowUpSerializer.new(f).as_json },
+      total: follow_ups.count
     }, status: :ok
   end
 
@@ -115,7 +115,7 @@ class Api::V1::FollowUpsController < ApplicationController
 
   def format_errors(errors)
     errors.messages.map do |field, messages|
-      { field: field, messages: messages }
+      "#{field.to_s.gsub('_', ' ').capitalize} #{messages.join(', ')}"
     end
   end
 end
