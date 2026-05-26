@@ -84,22 +84,12 @@ class Api::V1::FollowUpsController < ApplicationController
 
   def set_job_application
     @job_application = current_user.job_applications.find(params[:job_application_id])
-  rescue ActiveRecord::RecordNotFound
-    render json: {
-      status: "error",
-      message: "Job Application not found."
-    }, status: :not_found
   end
 
   def set_follow_up
     @follow_up = FollowUp.joins(:job_application)
                         .where(job_application: { user_id: current_user.id })
                         .find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render json: {
-      status: "error",
-      message: "Follow Ups not found."
-    }, status: :not_found
   end
 
   def filter_follow_ups(follow_ups)

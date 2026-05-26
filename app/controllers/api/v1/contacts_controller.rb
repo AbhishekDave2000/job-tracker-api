@@ -68,22 +68,12 @@ class Api::V1::ContactsController < ApplicationController
     private
     def set_job_application
         @job_application = current_user.job_applications.find(params[:job_application_id])
-    rescue ActiveRecord::RecordNotFound
-        render json: {
-            status: "error",
-            message: "Job Application Not Found"
-        }, status: :not_found
     end
 
     def set_contact
         @contact = Contact.joins(:job_application)
                             .where(job_application: { user_id: current_user.id })
                             .find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-        render json: {
-            status:  "error",
-            message: "Contact not found"
-        }, status: :not_found
     end
 
     def contact_params
