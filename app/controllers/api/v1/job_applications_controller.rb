@@ -48,7 +48,7 @@ class Api::V1::JobApplicationsController < ApplicationController
     def filter_params
         params.permit(:status)
     end
-    
+
     def set_job_application
         @job_application = current_user.job_applications.find(params[:id])
     rescue
