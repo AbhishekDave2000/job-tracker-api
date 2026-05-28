@@ -354,8 +354,3 @@ Full Stack Developer — Toronto, ON
 [LinkedIn](https://www.linkedin.com/in/abhishek-dave-15b3711a4/)
 [GitHub](https://github.com/AbhishekDave2000)
 
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
