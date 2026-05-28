@@ -82,7 +82,7 @@ class Api::V1::ContactsController < ApplicationController
 
     def format_errors(errors)
         errors.messages.map do |field, messages|
-            { field: field, messages: messages }
+            "#{field.to_s.gsub('_', ' ').capitalize} #{messages.join(' and ')}"
         end
     end
 end
